@@ -37,16 +37,13 @@ void UserInfo::write(ostream &out){//向输出流输出账号及密码信息，以空格为间
 	out << myId << " " << myPassword << endl;
 }
 bool UserInfo::operator==(const UserInfo & user)const{//等号重载
-	return myId < user.myId &&
-		myPassword == user.myPassword;
+	return myId < user.myId;
 }
 bool UserInfo::operator<(const UserInfo & user)const{//小于号重载
-	return myId < user.myId ||
-		myId == user.myId && myPassword < user.myPassword;//当账号一样是按照密码进行对比
+	return myId < user.myId;//当账号一样是按照密码进行对比
 }
 bool UserInfo::operator>(const UserInfo & user)const{//大于号重载
-	return myId>user.myId ||
-		myId == user.myId && myPassword>user.myPassword;//当账号一样是按照密码进行对比
+	return myId>user.myId ;//当账号一样是按照密码进行对比
 }
 ostream & operator<<(ostream & out, UserInfo &user) {//UserInfo类的友元函数用于输出流运算符重载
 	user.write(out);
@@ -287,7 +284,7 @@ void Tree::outputTreeHelper(TreeNode* nodePtr, int space){//space 表示输出该值之
 		outputTreeHelper(nodePtr->rightPtr, space + 5);//输出该值之前应该先输出该值得左子树，往下推进一层，所以空格数加5
 		for (int i = 0; i < space; i++)//输出空格以构建层次感
 			cout << ' ';
-		cout << *nodePtr->getData() << endl;//输出数值外还要输出换行
+		cout << nodePtr->getData()->id() << endl;//输出数值外还要输出换行
 		outputTreeHelper(nodePtr->leftPtr, space + 5);
 	}
 }
@@ -436,7 +433,7 @@ void Menu::register_into_file_tree(){//注册界面
 	string account = "";
 	char password[11];
 	int i = 0;
-	cout << "\n 请输入您的用户名以及密码，为保障账户安全，密码长度要求不小于6不大于10\n";
+	cout << "\n 请输入您的用户名以及密码，不可以包含空格，为保障账户安全，密码长度要求不小于6不大于10\n";
 	cout << "用户名：";
 	cin >> account;
 	user.set_myId(account);
